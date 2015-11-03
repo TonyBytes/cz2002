@@ -7,7 +7,7 @@ public class ShowingTime {
 	private String time;
 	private Ticket[][] ticket;
 	//first class 1, second class 2
-	private int class;
+	private int classType;
 
 
 	public ShowingTime(cinema:Cinema, movie:Movie, date:String, time:String, class:int){
@@ -17,7 +17,7 @@ public class ShowingTime {
 		this.time = time;
 		this.class = class;
 
-		double price = (class==1)?100:50;
+		double price = (classType==1)?100:50;
 
 		ticket = new Ticket[10][10];
 		for(int i = 0; i < 10; i++){

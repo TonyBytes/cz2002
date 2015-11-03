@@ -28,7 +28,7 @@ public class Cinema {
 	}
 
 	public void addShowingTime() {
-		showingTime.add(new Showingtime(cinema, movie, date, time));
+		showingTime.add(new Showingtime(cinema, movie, date, time, classType));
 	}
 
 	public void removeShowingTime(int i) {
