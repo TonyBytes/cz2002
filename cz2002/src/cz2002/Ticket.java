@@ -1,6 +1,7 @@
 package cz2002;
 
 public class Ticket {
+
 	private int row;
 	private int column;
 	private double price;
@@ -51,5 +52,4 @@ public class Ticket {
 	public void printHistory(String name){
 		System.out.println(name);
 	}
-
 }
