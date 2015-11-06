@@ -1,13 +1,16 @@
 package cz2002;
 
+import java.util.ArrayList;
+
 public class Ticket {
 
 	private int row;
 	private int column;
 	private double price;
 	private boolean isBooked;
-	private String TID;
-	Vector history;
+	public String TID;
+	public ArrayList<String> history;
+	private MovieGoer cust;
 	
 	public Ticket(){
 		row = 0;
@@ -45,11 +48,9 @@ public class Ticket {
 		return column;
 	}
 	
-	public String getTID(){
-		return TID;
-	}
 	
-	public void printHistory(String name){
-		System.out.println(name);
+	public void printHistory(MovieGoer cust){
+		for(String i:cust.history)
+			System.out.println(i);
 	}
 }
