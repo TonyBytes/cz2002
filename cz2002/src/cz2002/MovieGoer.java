@@ -23,7 +23,7 @@ public class MovieGoer {
 	public String getEmail(){return email;}
 	public int getAge(){return age;}
 	
-	private void makeReview(){
+	public void makeReview(){
 		Review newReview = new Review();
 		String content;
 		Scanner scan = new Scanner(System.in);
