@@ -6,10 +6,10 @@ public class Cinema {
 
 	private String code;
 	private String cineplex;
-	private String cinemaClass;
+	private int cinemaClass;
 	private ArrayList<ShowingTime> showingTime;
 
-	public Cinema(String code, String cineplex, String cinemaClass) {
+	public Cinema(String code, String cineplex, int cinemaClass) {
 		this.code = code;
 		this.cineplex = cineplex;
 		this.cinemaClass = cinemaClass;
@@ -24,11 +24,20 @@ public class Cinema {
 	}
 
 	public String getCinemaClass() {
-		return cinemaClass;
+		if (cinemaClass == 1) {
+			return "Platinum Class";
+		} else {
+			return "Gold Class";
+		}
 	}
 
+<<<<<<< HEAD
 	public void addShowingTime() {
 		showingTime.add(new ShowingTime(cinema, movie, date, time, classType));
+=======
+	public void addShowingTime(Movie movie, String date, String time) {
+		showingTime.add(new ShowingTime(code, movie, date, time, cinemaClass));
+>>>>>>> origin/master
 	}
 
 	public void removeShowingTime(int i) {
