@@ -1,0 +1,12 @@
+package cz2002;
+
+public class Ticket {
+	private Movie movie= new Movie();
+	
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

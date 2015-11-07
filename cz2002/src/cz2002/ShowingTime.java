@@ -1,7 +1,7 @@
 package cz2002;
 
 public class ShowingTime {
-	private Cinema cinema;
+	private String cinemaCode;
 	private Movie movie;
 	private String date;
 	private String time;
@@ -9,8 +9,8 @@ public class ShowingTime {
 	// first class 1, second class 2
 	private int classType;
 
-	public ShowingTime(Cinema cinema, Movie movie, String date, String time, int classType) {
-		this.cinema = cinema;
+	public ShowingTime(String cinemaCode, Movie movie, String date, String time, int classType) {
+		this.cinemaCode = cinemaCode;
 		this.movie = movie;
 		this.date = date;
 		this.time = time;
