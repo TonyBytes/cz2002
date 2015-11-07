@@ -1,6 +1,6 @@
 package cz2002;
-
-public class ShowingTime {
+import java.io.*;
+public class ShowingTime implements Serializable{
 	private String cinemaCode;
 	private Movie movie;
 	private String date;
