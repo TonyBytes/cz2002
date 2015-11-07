@@ -9,7 +9,7 @@ public class MovieGoer {
 	private String email;
 	private int age;
 	private ArrayList<Review> review;
-	public ArrayList<String> history;
+	//public ArrayList<History> history;
 	
 	public MovieGoer(String n, long mNo, String e, int a)
 	{
@@ -40,8 +40,8 @@ public class MovieGoer {
 				System.out.println(i.content);
 		
 	}
-	public void addHistory(String TID){
-		this.history.add(TID);
-	}
+	//public void addHistory(History his){
+	//	this.history.add(his);
+	//}
 	
 }

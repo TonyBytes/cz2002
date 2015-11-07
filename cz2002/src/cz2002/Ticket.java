@@ -9,7 +9,7 @@ public class Ticket {
 	private double price;
 	private boolean isBooked;
 	public String TID;
-	public ArrayList<String> history;
+	//public ArrayList<String> history;
 	private MovieGoer cust;
 	
 	public Ticket(){
@@ -49,8 +49,8 @@ public class Ticket {
 	}
 	
 	
-	public void printHistory(MovieGoer cust){
-		for(String i:cust.history)
-			System.out.println(i);
-	}
+	//public void printHistory(MovieGoer cust){
+	//	for(String i:cust.history)
+	//		System.out.println(i);
+	//}
 }

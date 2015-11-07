@@ -31,13 +31,13 @@ public class Cinema {
 		}
 	}
 
-<<<<<<< HEAD
+
 	public void addShowingTime() {
 		showingTime.add(new ShowingTime(cinema, movie, date, time, classType));
 =======
 	public void addShowingTime(Movie movie, String date, String time) {
 		showingTime.add(new ShowingTime(code, movie, date, time, cinemaClass));
->>>>>>> origin/master
+
 	}
 
 	public void removeShowingTime(int i) {
