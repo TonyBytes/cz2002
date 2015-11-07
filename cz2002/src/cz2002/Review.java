@@ -3,11 +3,12 @@ package cz2002;
 public class Review {
 	public String name;
 	public String content;
-	private int rating;
+	public int rating;
 	
-	public int getRating(){
-		return rating;
+	public Review(String aName,String aContent,int aRating){
+		name = aName;
+		content = aContent;
+		rating = aRating;
 	}
-
 	
 }
