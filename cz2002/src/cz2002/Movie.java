@@ -1,7 +1,9 @@
 package cz2002;
 import java.util.*;
-
-public class Movie {
+import java.io.*;
+public class Movie implements Serializable {
+	
+	private int id;
 	private String title;
 	protected int showingStatus; // coming soon =1 , preview = 2, now showing =3;
 	private String synopsis;
@@ -9,17 +11,18 @@ public class Movie {
 	private Vector cast;
 	private float rating;
 	private Vector reviewList;  //connecting reviews
-	private Vector timeList;   // connecting showingTime
+	//private Vector timeList;   // connecting showingTime
 	private int reviewNum;   // record the review number to calculate the average review
 	
 	public Movie(String t, String s, String d){
+		
 		title = t;
 		showingStatus = 1;
 		synopsis= s;
 		director =d;
 		 cast = new Vector<String>();
 		 reviewList = new Vector<Review>();
-		 timeList = new Vector<ShowingTime>();
+		// timeList = new Vector<ShowingTime>();
 		 reviewNum=0;
 		 rating = 5;
 		 
@@ -48,7 +51,16 @@ public class Movie {
 			return false;
 	}
 	
-	public void getInfo(){
+	public String toString(){
+		
+		String castInfo="";
+		Iterator i = cast.iterator();
+	    while (i.hasNext()) {
+	      castInfo += (i.next()+ " ");
+	    }
+		
+		
+		return title+" "+showingStatus+ " " +director+"" +synopsis + " " + castInfo +" ";
 		//depends on the format requirement , needed to discuss
 	}
 	
