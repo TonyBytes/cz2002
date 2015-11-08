@@ -11,7 +11,7 @@ public class Movie implements Serializable {
 	private Vector cast;
 	private float rating;
 	private Vector reviewList;  //connecting reviews
-	//private Vector timeList;   // connecting showingTime
+	private Vector timeList;   // connecting showingTime
 	private int reviewNum;   // record the review number to calculate the average review
 	
 	public Movie(String t, String s, String d){
@@ -22,7 +22,7 @@ public class Movie implements Serializable {
 		director =d;
 		 cast = new Vector<String>();
 		 reviewList = new Vector<Review>();
-		// timeList = new Vector<ShowingTime>();
+		 timeList = new Vector<ShowingTime>();
 		 reviewNum=0;
 		 rating = 5;
 		 
