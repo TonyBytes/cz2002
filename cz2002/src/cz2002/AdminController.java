@@ -128,7 +128,7 @@ public class AdminController {
 		ois2.close();
 
 		sel = input.nextInt();
-		if (num + 1 == sel) {
+		if (num < sel && num > 0) {
 			return;
 		}
 
