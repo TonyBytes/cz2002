@@ -11,4 +11,5 @@ public class History {
 	}
 	public String getCustName(){return custName;}
 	public String getMovieName(){return movieName;}
+	public String getTID(){return trID;}
 }

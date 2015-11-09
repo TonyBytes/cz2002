@@ -22,7 +22,7 @@ public class MovieGoer {
 	public long getMobileNo(){return mobileNo;}
 	public String getEmail(){return email;}
 	public int getAge(){return age;}
-	
+	/*
 	public void makeReview(){
 		Review newReview = new Review();
 		String content;
@@ -33,6 +33,7 @@ public class MovieGoer {
 		newReview.content = content;
 		review.add(newReview);
 	}
+	
 	public void showReview(){
 		System.out.println(this.getName()+"'s review:");
 		for (Review i: review)
@@ -40,6 +41,7 @@ public class MovieGoer {
 				System.out.println(i.content);
 		
 	}
+	*/
 	//public void addHistory(History his){
 	//	this.history.add(his);
 	//}
