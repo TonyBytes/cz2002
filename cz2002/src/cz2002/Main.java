@@ -17,7 +17,7 @@ public class Main {
 		 */
 
 		Scanner input = new Scanner(System.in);
-		int sel = 3;
+		int sel = 0;
 		System.out.println("=====Welcome=====");
 
 		while (sel != 3) {

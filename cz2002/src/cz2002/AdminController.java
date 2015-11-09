@@ -9,8 +9,11 @@ import java.util.Scanner;
 
 public class AdminController {
 
+	private static Scanner input = new Scanner(System.in);
+
 	public static boolean checkLogin() {
 		System.out.println("input admin password:");
+
 		if (input.nextLine().equals("admin")) {
 			return true;
 		}
@@ -208,20 +211,20 @@ public class AdminController {
 		oos2.close();
 	}
 
-	private void createShowingTime(){
+	private void createShowingTime() throws Exception {
 		FileInputStream fis2 = new FileInputStream("database/ShowingTime");
 		ObjectInputStream ois2 = new ObjectInputStream(fis2);
 		FileOutputStream fos2 = new FileOutputStream("database/ShowingTime");
 		ObjectOutputStream oos2 = new ObjectOutputStream(fos2);
 
 		System.out.print("Enter the cinema code: ");
-		String cinimaCode = input.next();
+		String cinemaCode = input.next();
 		System.out.print("Choose a movie: ");
-		int movieNumber = ois2.readInt;
+		int movieNumber = ois2.readInt();
 		Movie movie;
 		Movie[] movielist = new Movie[movieNumber];
-		for(int i = 0; i < movieNumber; i++){
-			movie = (Movie)ois2.readObject();
+		for (int i = 0; i < movieNumber; i++) {
+			movie = (Movie) ois2.readObject();
 			movielist[i] = movie;
 			System.out.println(i + ". " + movie.toString());
 		}
@@ -234,22 +237,22 @@ public class AdminController {
 		System.out.println("Choose the class type: ");
 		System.out.println("1. Platinum($100 per ticket) ");
 		System.out.println("2. Gold($50 per ticket)");
-		String classType = input.nextInt();
+		int classType = input.nextInt();
 		ShowingTime st = new ShowingTime(cinemaCode, movie, date, time, classType);
 		int showingTimeNumber = ois2.readInt();
 		ShowingTime[] showingTimeList = new ShowingTime[showingTimeNumber + 1];
 		for (int i = 0; i < showingTimeNumber; i++) {
-			showingTimeList[i] = ois2.readObject();
+			showingTimeList[i] = (ShowingTime) ois2.readObject();
 		}
 		showingTimeList[showingTimeNumber] = st;
 		oos2.writeInt(showingTimeNumber + 1);
 		for (int i = 0; i < showingTimeNumber + 1; i++) {
-			oosShow.writeObject(showingTimeList[i]);
+			oos2.writeObject(showingTimeList[i]);
 		}
 		System.out.println("New showing time is added successfully!");
 	}
 
-	private void updateShowingTime(){
+	private void updateShowingTime() {
 		FileInputStream fis2 = new FileInputStream("database/ShowingTime");
 		ObjectInputStream ois2 = new ObjectInputStream(fis2);
 		FileOutputStream fos2 = new FileOutputStream("database/ShowingTime");
@@ -260,7 +263,7 @@ public class AdminController {
 		System.out.print("Choose a showing time: ");
 		ShowingTime[] showingTimeList = new ShowingTime[showingTimeNumber];
 		for (int i = 0; i < showingTimeNumber; i++) {
-			st = (ShowingTime)ois2.readObject();
+			st = (ShowingTime) ois2.readObject();
 			showingTimeList[i] = st;
 			System.out.println(i + ". " + st.toString());
 		}
@@ -271,11 +274,11 @@ public class AdminController {
 		System.out.print("Enter its new cinema code: ");
 		String cinimaCode = input.next();
 		System.out.print("Choose a new movie: ");
-		int movieNumber = ois2.readInt;
+		int movieNumber = ois2.readInt();
 		Movie movie;
 		Movie[] movielist = new Movie[movieNumber];
-		for(int i = 0; i < movieNumber; i++){
-			movie = (Movie)ois2.readObject();
+		for (int i = 0; i < movieNumber; i++) {
+			movie = (Movie) ois2.readObject();
 			movielist[i] = movie;
 			System.out.println(i + ". " + movie.toString());
 		}
@@ -297,24 +300,25 @@ public class AdminController {
 		System.out.println("The showing time is updated successfully!");
 
 	}
-	private void removeShowingTime(){
+
+	private void removeShowingTime() {
 		FileInputStream fis2 = new FileInputStream("database/ShowingTime");
 		ObjectInputStream ois2 = new ObjectInputStream(fis2);
 		FileOutputStream fos2 = new FileOutputStream("database/ShowingTime");
 		ObjectOutputStream oos2 = new ObjectOutputStream(fos2);
-				int showingTimeNumber = ois2.readInt();
+		int showingTimeNumber = ois2.readInt();
 		ShowingTime st;
 		System.out.print("Choose a showing time: ");
 		ShowingTime[] showingTimeList = new ShowingTime[showingTimeNumber];
 		for (int i = 0; i < showingTimeNumber; i++) {
-			st = (ShowingTime)ois2.readObject();
+			st = (ShowingTime) ois2.readObject();
 			showingTimeList[i] = st;
 			System.out.println(i + ". " + st.toString());
 		}
 		int choice = input.nextInt();
 		oos2.writeInt(showingTimeNumber - 1);
 		for (int i = 0; i < showingTimeNumber; i++) {
-			if(i != choice)
+			if (i != choice)
 				oos2.writeObject(showingTimeList[i]);
 		}
 		System.out.println("The showing time is removed successfully!");
