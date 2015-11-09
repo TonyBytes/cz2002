@@ -229,6 +229,7 @@ public class AdminController {
 			movielist[i] = movie;
 			System.out.println(i + ". " + movie.toString());
 		}
+		ois1.close();
 		int choice = input.nextInt();
 		movie = movielist[choice];
 		System.out.print("Enter the date(dd/mm/yyyy): ");
@@ -278,14 +279,17 @@ public class AdminController {
 		System.out.print("Enter its new cinema code: ");
 		String cinemaCode = input.next();
 		System.out.print("Choose a new movie: ");
-		int movieNumber = ois2.readInt();
+		FileInputStream fis1 = new FileInputStream("database/Movie");
+		ObjectInputStream ois1 = new ObjectInputStream(fis1);
+		int movieNumber = ois1.readInt();
 		Movie movie;
 		Movie[] movielist = new Movie[movieNumber];
 		for (int i = 0; i < movieNumber; i++) {
-			movie = (Movie) ois2.readObject();
+			movie = (Movie) ois1.readObject();
 			movielist[i] = movie;
 			System.out.println(i + ". " + movie.toString());
 		}
+		ois1.close();
 		int choiceMov = input.nextInt();
 		movie = movielist[choiceMov];
 		System.out.print("Enter a new date(dd/mm/yyyy): ");
