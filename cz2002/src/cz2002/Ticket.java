@@ -19,11 +19,11 @@ public class Ticket {
 		isBooked = false;
 	}
 	
-	public Ticket(int r, int c, double p, boolean is, String TicketID){
+	public Ticket(int r, int c, double p, String TicketID){
 		row = r;
 		column = c;
 		price = p;
-		isBooked = is;
+		isBooked = false;
 		TID = TicketID;
 	}
 	
