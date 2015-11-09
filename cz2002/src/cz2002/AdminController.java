@@ -18,7 +18,7 @@ public class AdminController {
 		return false;
 	}
 
-	public static void adminManager() {
+	public static void adminManager() throws Exception {
 
 		System.out.println("Administrator Option:");
 		System.out.println("1. Create new movie to the list");
@@ -36,104 +36,16 @@ public class AdminController {
 				System.out.println("input choice:");
 				switch (input.nextInt()) {
 				case 1: {
-					// createMovie();
-					input.nextLine();
-					String t, s, d, x;
-					System.out.print("Movie Title:");
-					t = input.nextLine();
-					System.out.print("Movie Synpsis:");
-					s = input.nextLine();
-					System.out.print("Movie Director:");
-					d = input.nextLine();
-
-					Movie m = new Movie(t, s, d);
-					System.out.print("Number of cast:");
-					int a = input.nextInt();
-					input.nextLine();
-					int i;
-					for (i = 0; i < a; i++) {
-						System.out.print("Cast " + (i + 1) + ":");
-						x = input.nextLine();
-						m.addCast(x);
-					}
-					int num;
-					// update number of movie
-					FileInputStream fis = new FileInputStream("database/Movie");
-					ObjectInputStream ois = new ObjectInputStream(fis);
-					num = ois.readInt();
-					num++;
-					Movie[] mList = new Movie[num];
-
-					// read all Movie objects file
-					for (i = 0; i < num - 1; i++) {
-						mList[i] = (Movie) ois.readObject();
-					}
-
-					ois.close();
-					// append Movie
-					mList[num - 1] = m;
-
-					FileOutputStream fos2 = new FileOutputStream("database/Movie");
-					ObjectOutputStream oos2 = new ObjectOutputStream(fos2);
-					oos2.writeInt(num);
-					for (i = 0; i < num; i++) {
-						oos2.writeObject(mList[i]);
-					}
-
-					oos2.close();
+					createMovie();
 					break;
 				}
 
 				case 2: {
-					int i, sel;
-
-					// read the whole Movie objects file
-					FileInputStream fis2 = new FileInputStream("database/Movie");
-					ObjectInputStream ois2 = new ObjectInputStream(fis2);
-					int num = ois2.readInt();
-					Movie[] mList = new Movie[num];
-					System.out.println("select from below");
-					for (i = 0; i < num; i++) {
-						mList[i] = (Movie) ois2.readObject();
-						System.out.println("Movie " + (i + 1) + ": " + mList[i].toString());
-					}
-					ois2.close();
-					sel = input.nextInt();
-
-					input.nextLine();
-					// modify movie ,sort of
-					String t, s, d, x;
-					System.out.print("Movie Title:");
-					t = input.nextLine();
-					System.out.print("Movie Synpsis:");
-					s = input.nextLine();
-					System.out.print("Movie Director:");
-					d = input.nextLine();
-
-					Movie m = new Movie(t, s, d);
-					System.out.print("Number of cast:");
-					int a = input.nextInt();
-					input.nextLine();
-					for (i = 0; i < a; i++) {
-						System.out.print("Cast " + (i + 1) + ":");
-						x = input.nextLine();
-						m.addCast(x);
-					}
-
-					mList[sel - 1] = m;
-
-					// rewrite files
-					FileOutputStream fos2 = new FileOutputStream("database/Movie");
-					ObjectOutputStream oos2 = new ObjectOutputStream(fos2);
-					oos2.writeInt(num);
-					for (i = 0; i < num; i++) {
-						oos2.writeObject(mList[i]);
-					}
-					oos2.close();
+					updateMovie();
 					break;
 				}
 				case 3:
-					// removeMovie();
+					removeMovie();
 					break;
 				case 4:
 					// createShowingTime();
@@ -160,5 +72,137 @@ public class AdminController {
 		} catch (ClassNotFoundException e) {
 			System.out.println(e);
 		}
+	}
+
+	private static void removeMovie() throws Exception {
+		int sel, i;
+
+		FileInputStream fis2 = new FileInputStream("database/Movie");
+		ObjectInputStream ois2 = new ObjectInputStream(fis2);
+		int num = ois2.readInt();
+		Movie[] mList = new Movie[num];
+
+		System.out.println("delete from below:");
+		for (i = 0; i < num; i++) {
+			mList[i] = (Movie) ois2.readObject();
+			System.out.println("Movie " + (i + 1) + ": " + mList[i].toString());
+		}
+		ois2.close();
+		sel = input.nextInt();
+		input.nextLine();
+
+		// update number of movie
+		num--;
+
+		FileOutputStream fos2 = new FileOutputStream("database/Movie");
+		ObjectOutputStream oos2 = new ObjectOutputStream(fos2);
+		oos2.writeInt(num);
+		for (i = 0; i < num; i++) {
+			if (!(sel == i + 1)) {
+				oos2.writeObject(mList[i]);
+			}
+		}
+
+		oos2.close();
+
+	}
+
+	private static void updateMovie() throws Exception {
+		int i, sel;
+
+		// read the whole Movie objects file
+		FileInputStream fis2 = new FileInputStream("database/Movie");
+		ObjectInputStream ois2 = new ObjectInputStream(fis2);
+		int num = ois2.readInt();
+		Movie[] mList = new Movie[num];
+		System.out.println("select from below");
+		for (i = 0; i < num; i++) {
+			mList[i] = (Movie) ois2.readObject();
+			System.out.println("Movie " + (i + 1) + ": " + mList[i].toString());
+		}
+		ois2.close();
+
+		sel = input.nextInt();
+		if (num + 1 == sel) {
+			return;
+		}
+
+		input.nextLine();
+		// modify movie ,sort of
+		String t, s, d, x;
+		System.out.print("Movie Title:");
+		t = input.nextLine();
+		System.out.print("Movie Synpsis:");
+		s = input.nextLine();
+		System.out.print("Movie Director:");
+		d = input.nextLine();
+		Movie m = new Movie(t, s, d);
+		System.out.print("Number of cast:");
+		int a = input.nextInt();
+		input.nextLine();
+		for (i = 0; i < a; i++) {
+			System.out.print("Cast " + (i + 1) + ":");
+			x = input.nextLine();
+			m.addCast(x);
+		}
+
+		mList[sel - 1] = m;
+
+		// rewrite files
+		FileOutputStream fos2 = new FileOutputStream("database/Movie");
+		ObjectOutputStream oos2 = new ObjectOutputStream(fos2);
+		oos2.writeInt(num);
+		for (i = 0; i < num; i++) {
+			oos2.writeObject(mList[i]);
+		}
+		oos2.close();
+
+	}
+
+	private static void createMovie() throws Exception {
+		input.nextLine();
+		String t, s, d, x;
+		System.out.print("Movie Title:");
+		t = input.nextLine();
+		System.out.print("Movie Synpsis:");
+		s = input.nextLine();
+		System.out.print("Movie Director:");
+		d = input.nextLine();
+
+		Movie m = new Movie(t, s, d);
+		System.out.print("Number of cast:");
+		int a = input.nextInt();
+		input.nextLine();
+		int i;
+		for (i = 0; i < a; i++) {
+			System.out.print("Cast " + (i + 1) + ":");
+			x = input.nextLine();
+			m.addCast(x);
+		}
+		int num;
+		// update number of movie
+		FileInputStream fis = new FileInputStream("database/Movie");
+		ObjectInputStream ois = new ObjectInputStream(fis);
+		num = ois.readInt();
+		num++;
+		Movie[] mList = new Movie[num];
+
+		// read all Movie objects file
+		for (i = 0; i < num - 1; i++) {
+			mList[i] = (Movie) ois.readObject();
+		}
+
+		ois.close();
+		// append Movie
+		mList[num - 1] = m;
+
+		FileOutputStream fos2 = new FileOutputStream("database/Movie");
+		ObjectOutputStream oos2 = new ObjectOutputStream(fos2);
+		oos2.writeInt(num);
+		for (i = 0; i < num; i++) {
+			oos2.writeObject(mList[i]);
+		}
+
+		oos2.close();
 	}
 }
