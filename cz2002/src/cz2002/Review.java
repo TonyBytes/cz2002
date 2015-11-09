@@ -4,14 +4,14 @@ public class Review {
 	public String name;
 	public String mName;
 	public String content;
-	private double rating;
+	private float rating;
 	
-	public Review(String aName,String moName,String aContent,double aRating){
+	public Review(String aName,String moName,String aContent,float aRating){
 		name = aName;
 		mName = moName;
 		content = aContent;
 		rating = aRating;
 	}
-	public double getRating(){return rating;}
+	public float getRating(){return rating;}
 	
 }

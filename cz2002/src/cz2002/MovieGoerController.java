@@ -56,7 +56,7 @@ public class MovieGoerController {
 	    FileOutputStream fos = new FileOutputStream("database/Review");
 	    ObjectOutputStream oos = new ObjectOutputStream(fos);
 	    System.out.println("Please key in your rating");
-	    double rate = input.nextDouble();
+	    float rate = input.nextFloat();
 	    System.out.print("Please make your review");
 	    String content = input.next();
 	    Review review = new Review(name1,mName,content,rate);    
