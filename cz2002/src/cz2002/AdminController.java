@@ -15,7 +15,10 @@ public class AdminController {
 		if (input.nextLine().equals("admin")) {
 			return true;
 		}
-		return false;
+		{
+			System.out.println("wrong password!");
+			return false;
+		}
 	}
 
 	public static void adminManager() throws Exception {
