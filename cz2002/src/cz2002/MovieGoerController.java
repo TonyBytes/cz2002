@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class MovieGoerController {
 	private static Scanner input = new Scanner(System.in);
 	public static void MovieGoerMain(){
-	
+		
 		while(true){
 		System.out.println("Movie-goer Option:");
 		System.out.println("1. I want all movie showing now");
@@ -21,9 +21,27 @@ public class MovieGoerController {
 		if(option == 7) break;
 		switch(option){
 		case 1:
+			//showing time
 			break;
 		case 2:
+		{
+			int i, sel;
+
+			// read the whole Movie objects file
+			FileInputStream fis2 = new FileInputStream("database/Movie");
+			ObjectInputStream ois2 = new ObjectInputStream(fis2);
+			int num = ois2.readInt();
+			Movie[] mList = new Movie[num];
+			System.out.println("select from below");
+			for (i = 0; i < num; i++) {
+				mList[i] = (Movie) ois2.readObject();
+				System.out.println("Movie " + (i + 1) + ": " + mList[i].toString());
+			}
+			ois2.close();
+
+			sel = input.nextInt();
 			break;
+		}
 		case 3:
 			break;
 		case 4:
