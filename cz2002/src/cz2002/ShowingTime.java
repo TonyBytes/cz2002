@@ -21,7 +21,7 @@ public class ShowingTime implements Serializable{
 		ticket = new Ticket[10][10];
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
-				ticket[i][j] = new Ticket(i, j, price);
+				ticket[i][j] = new Ticket(i, j, price, this.toString() + "R" + i + "C" + j);
 			}
 		}
 	}
@@ -45,7 +45,7 @@ public class ShowingTime implements Serializable{
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				if (ticket[i][j].getBooked() != available) {
-					checkTicket[index] = ticket[i][j].clone();
+					checkTicket[index] = ticket[i][j];
 					index++;
 				}
 
@@ -55,7 +55,7 @@ public class ShowingTime implements Serializable{
 	}
 
 	public String toString() {
-		return "MOVIE:" + movie.getInfo() + " DATE: " + date + " TIME: " + time;
+		return "MOVIE:" + movie.toString() + " DATE: " + date + " TIME: " + time;
 	}
 
 	public void printAllTicket() {

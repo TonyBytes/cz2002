@@ -53,13 +53,13 @@ public class AdminController {
 					removeMovie();
 					break;
 				case 4:
-					// createShowingTime();
+					createShowingTime();
 					break;
 				case 5:
-					// updateShowingTime();
+					updateShowingTime();
 					break;
 				case 6:
-					// removeShowingTime();
+					removeShowingTime();
 					break;
 				case 7:
 					// otherConfigure();
@@ -211,7 +211,7 @@ public class AdminController {
 		oos2.close();
 	}
 
-	private void createShowingTime() throws Exception {
+	private static void createShowingTime() throws Exception {
 		FileInputStream fis2 = new FileInputStream("database/ShowingTime");
 		ObjectInputStream ois2 = new ObjectInputStream(fis2);
 		FileOutputStream fos2 = new FileOutputStream("database/ShowingTime");
@@ -250,9 +250,11 @@ public class AdminController {
 			oos2.writeObject(showingTimeList[i]);
 		}
 		System.out.println("New showing time is added successfully!");
+		ois2.close();
+		oos2.close();
 	}
 
-	private void updateShowingTime() {
+	private static void updateShowingTime() throws Exception {
 		FileInputStream fis2 = new FileInputStream("database/ShowingTime");
 		ObjectInputStream ois2 = new ObjectInputStream(fis2);
 		FileOutputStream fos2 = new FileOutputStream("database/ShowingTime");
@@ -272,7 +274,7 @@ public class AdminController {
 
 		//////////////////////////
 		System.out.print("Enter its new cinema code: ");
-		String cinimaCode = input.next();
+		String cinemaCode = input.next();
 		System.out.print("Choose a new movie: ");
 		int movieNumber = ois2.readInt();
 		Movie movie;
@@ -291,17 +293,19 @@ public class AdminController {
 		System.out.println("Choose the class type: ");
 		System.out.println("1. Platinum($100 per ticket) ");
 		System.out.println("2. Gold($50 per ticket)");
-		String classType = input.nextInt();
+		int classType = input.nextInt();
 		st = new ShowingTime(cinemaCode, movie, date, time, classType);
 		showingTimeList[choice] = st;
 		for (int i = 0; i < showingTimeNumber; i++) {
 			oos2.writeObject(showingTimeList[i]);
 		}
 		System.out.println("The showing time is updated successfully!");
+		ois2.close();
+		oos2.close();
 
 	}
 
-	private void removeShowingTime() {
+	private static void removeShowingTime() throws Exception {
 		FileInputStream fis2 = new FileInputStream("database/ShowingTime");
 		ObjectInputStream ois2 = new ObjectInputStream(fis2);
 		FileOutputStream fos2 = new FileOutputStream("database/ShowingTime");
@@ -322,5 +326,7 @@ public class AdminController {
 				oos2.writeObject(showingTimeList[i]);
 		}
 		System.out.println("The showing time is removed successfully!");
+		ois2.close();
+		oos2.close();
 	}
 }
