@@ -1,8 +1,9 @@
 package cz2002;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Ticket {
+public class Ticket implements Serializable{
 
 	private int row;
 	private int column;

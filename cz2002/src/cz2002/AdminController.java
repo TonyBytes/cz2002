@@ -212,19 +212,20 @@ public class AdminController {
 	}
 
 	private static void createShowingTime() throws Exception {
+		FileInputStream fis1 = new FileInputStream("database/Movie");
+		ObjectInputStream ois1 = new ObjectInputStream(fis1);
 		FileInputStream fis2 = new FileInputStream("database/ShowingTime");
 		ObjectInputStream ois2 = new ObjectInputStream(fis2);
-		FileOutputStream fos2 = new FileOutputStream("database/ShowingTime");
-		ObjectOutputStream oos2 = new ObjectOutputStream(fos2);
-
-		System.out.print("Enter the cinema code: ");
-		String cinemaCode = input.next();
+		input.nextLine();
+		System.out.println("Enter the cinema code: ");
+		String cinemaCode = input.nextLine();
 		System.out.print("Choose a movie: ");
-		int movieNumber = ois2.readInt();
+		int movieNumber = ois1.readInt();
+		System.out.println(movieNumber);
 		Movie movie;
 		Movie[] movielist = new Movie[movieNumber];
 		for (int i = 0; i < movieNumber; i++) {
-			movie = (Movie) ois2.readObject();
+			movie = (Movie) ois1.readObject();
 			movielist[i] = movie;
 			System.out.println(i + ". " + movie.toString());
 		}
@@ -232,7 +233,7 @@ public class AdminController {
 		movie = movielist[choice];
 		System.out.print("Enter the date(dd/mm/yyyy): ");
 		String date = input.next();
-		System.out.print("Enter the time(hh/mm): ");
+		System.out.print("Enter the time(hh:mm): ");
 		String time = input.next();
 		System.out.println("Choose the class type: ");
 		System.out.println("1. Platinum($100 per ticket) ");
@@ -245,20 +246,21 @@ public class AdminController {
 			showingTimeList[i] = (ShowingTime) ois2.readObject();
 		}
 		showingTimeList[showingTimeNumber] = st;
+		ois2.close();
+		FileOutputStream fos2 = new FileOutputStream("database/ShowingTime");
+		ObjectOutputStream oos2 = new ObjectOutputStream(fos2);
 		oos2.writeInt(showingTimeNumber + 1);
 		for (int i = 0; i < showingTimeNumber + 1; i++) {
 			oos2.writeObject(showingTimeList[i]);
 		}
 		System.out.println("New showing time is added successfully!");
-		ois2.close();
+		
 		oos2.close();
 	}
 
 	private static void updateShowingTime() throws Exception {
 		FileInputStream fis2 = new FileInputStream("database/ShowingTime");
 		ObjectInputStream ois2 = new ObjectInputStream(fis2);
-		FileOutputStream fos2 = new FileOutputStream("database/ShowingTime");
-		ObjectOutputStream oos2 = new ObjectOutputStream(fos2);
 
 		int showingTimeNumber = ois2.readInt();
 		ShowingTime st;
@@ -288,7 +290,7 @@ public class AdminController {
 		movie = movielist[choiceMov];
 		System.out.print("Enter a new date(dd/mm/yyyy): ");
 		String date = input.next();
-		System.out.print("Enter a new time(hh/mm): ");
+		System.out.print("Enter a new time(hh:mm): ");
 		String time = input.next();
 		System.out.println("Choose the class type: ");
 		System.out.println("1. Platinum($100 per ticket) ");
@@ -296,11 +298,13 @@ public class AdminController {
 		int classType = input.nextInt();
 		st = new ShowingTime(cinemaCode, movie, date, time, classType);
 		showingTimeList[choice] = st;
+		ois2.close();
+		FileOutputStream fos2 = new FileOutputStream("database/ShowingTime");
+		ObjectOutputStream oos2 = new ObjectOutputStream(fos2);
 		for (int i = 0; i < showingTimeNumber; i++) {
 			oos2.writeObject(showingTimeList[i]);
 		}
 		System.out.println("The showing time is updated successfully!");
-		ois2.close();
 		oos2.close();
 
 	}
@@ -308,8 +312,7 @@ public class AdminController {
 	private static void removeShowingTime() throws Exception {
 		FileInputStream fis2 = new FileInputStream("database/ShowingTime");
 		ObjectInputStream ois2 = new ObjectInputStream(fis2);
-		FileOutputStream fos2 = new FileOutputStream("database/ShowingTime");
-		ObjectOutputStream oos2 = new ObjectOutputStream(fos2);
+
 		int showingTimeNumber = ois2.readInt();
 		ShowingTime st;
 		System.out.print("Choose a showing time: ");
@@ -320,13 +323,15 @@ public class AdminController {
 			System.out.println(i + ". " + st.toString());
 		}
 		int choice = input.nextInt();
+		ois2.close();
+		FileOutputStream fos2 = new FileOutputStream("database/ShowingTime");
+		ObjectOutputStream oos2 = new ObjectOutputStream(fos2);
 		oos2.writeInt(showingTimeNumber - 1);
 		for (int i = 0; i < showingTimeNumber; i++) {
 			if (i != choice)
 				oos2.writeObject(showingTimeList[i]);
 		}
 		System.out.println("The showing time is removed successfully!");
-		ois2.close();
 		oos2.close();
 	}
 }
