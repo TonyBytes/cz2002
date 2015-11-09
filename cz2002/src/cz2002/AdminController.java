@@ -8,15 +8,7 @@ import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
 public class AdminController {
-	private static Scanner input = new Scanner(System.in);
-	private	static FileOutputStream fosMov = new FileOutputStream("database/Movie");
-    private static ObjectOutputStream oosMov = new ObjectOutputStream(fosMov);
-    private	static FileOutputStream fosShow = new FileOutputStream("database/ShowingTime");
-    private static ObjectOutputStream oosShow = new ObjectOutputStream(fosShow);
-        private static FileInputStream fisMov = new FileInputStream("database/Movie");
-    private static ObjectInputStream oisMov = new ObjectInputStream(fis);
-    private static FileInputStream fisShow = new FileInputStream("database/ShowingTime");
-    private static ObjectInputStream oisShow = new ObjectInputStream(fis);
+
 	public static boolean checkLogin() {
 		System.out.println("input admin password:");
 		if (input.nextLine().equals("admin")) {
@@ -217,14 +209,19 @@ public class AdminController {
 	}
 
 	private void createShowingTime(){
+		FileInputStream fis2 = new FileInputStream("database/ShowingTime");
+		ObjectInputStream ois2 = new ObjectInputStream(fis2);
+		FileOutputStream fos2 = new FileOutputStream("database/ShowingTime");
+		ObjectOutputStream oos2 = new ObjectOutputStream(fos2);
+
 		System.out.print("Enter the cinema code: ");
 		String cinimaCode = input.next();
 		System.out.print("Choose a movie: ");
-		int movieNumber = oisMov.readInt;
+		int movieNumber = ois2.readInt;
 		Movie movie;
 		Movie[] movielist = new Movie[movieNumber];
 		for(int i = 0; i < movieNumber; i++){
-			movie = (Movie)oisMov.readObject();
+			movie = (Movie)ois2.readObject();
 			movielist[i] = movie;
 			System.out.println(i + ". " + movie.toString());
 		}
@@ -239,15 +236,87 @@ public class AdminController {
 		System.out.println("2. Gold($50 per ticket)");
 		String classType = input.nextInt();
 		ShowingTime st = new ShowingTime(cinemaCode, movie, date, time, classType);
-		oosShow.writeInt((int)oisShow.readInt()+1);
-		oosShow.writeObject(st);
-		System.out.println("New movie is added successfully!");
+		int showingTimeNumber = ois2.readInt();
+		ShowingTime[] showingTimeList = new ShowingTime[showingTimeNumber + 1];
+		for (int i = 0; i < showingTimeNumber; i++) {
+			showingTimeList[i] = ois2.readObject();
+		}
+		showingTimeList[showingTimeNumber] = st;
+		oos2.writeInt(showingTimeNumber + 1);
+		for (int i = 0; i < showingTimeNumber + 1; i++) {
+			oosShow.writeObject(showingTimeList[i]);
+		}
+		System.out.println("New showing time is added successfully!");
 	}
 
 	private void updateShowingTime(){
+		FileInputStream fis2 = new FileInputStream("database/ShowingTime");
+		ObjectInputStream ois2 = new ObjectInputStream(fis2);
+		FileOutputStream fos2 = new FileOutputStream("database/ShowingTime");
+		ObjectOutputStream oos2 = new ObjectOutputStream(fos2);
+
+		int showingTimeNumber = ois2.readInt();
+		ShowingTime st;
+		System.out.print("Choose a showing time: ");
+		ShowingTime[] showingTimeList = new ShowingTime[showingTimeNumber];
+		for (int i = 0; i < showingTimeNumber; i++) {
+			st = (ShowingTime)ois2.readObject();
+			showingTimeList[i] = st;
+			System.out.println(i + ". " + st.toString());
+		}
+		int choice = input.nextInt();
+		st = showingTimeList[choice];
+
+		//////////////////////////
+		System.out.print("Enter its new cinema code: ");
+		String cinimaCode = input.next();
+		System.out.print("Choose a new movie: ");
+		int movieNumber = ois2.readInt;
+		Movie movie;
+		Movie[] movielist = new Movie[movieNumber];
+		for(int i = 0; i < movieNumber; i++){
+			movie = (Movie)ois2.readObject();
+			movielist[i] = movie;
+			System.out.println(i + ". " + movie.toString());
+		}
+		int choiceMov = input.nextInt();
+		movie = movielist[choiceMov];
+		System.out.print("Enter a new date(dd/mm/yyyy): ");
+		String date = input.next();
+		System.out.print("Enter a new time(hh/mm): ");
+		String time = input.next();
+		System.out.println("Choose the class type: ");
+		System.out.println("1. Platinum($100 per ticket) ");
+		System.out.println("2. Gold($50 per ticket)");
+		String classType = input.nextInt();
+		st = new ShowingTime(cinemaCode, movie, date, time, classType);
+		showingTimeList[choice] = st;
+		for (int i = 0; i < showingTimeNumber; i++) {
+			oos2.writeObject(showingTimeList[i]);
+		}
+		System.out.println("The showing time is updated successfully!");
 
 	}
 	private void removeShowingTime(){
-
+		FileInputStream fis2 = new FileInputStream("database/ShowingTime");
+		ObjectInputStream ois2 = new ObjectInputStream(fis2);
+		FileOutputStream fos2 = new FileOutputStream("database/ShowingTime");
+		ObjectOutputStream oos2 = new ObjectOutputStream(fos2);
+				int showingTimeNumber = ois2.readInt();
+		ShowingTime st;
+		System.out.print("Choose a showing time: ");
+		ShowingTime[] showingTimeList = new ShowingTime[showingTimeNumber];
+		for (int i = 0; i < showingTimeNumber; i++) {
+			st = (ShowingTime)ois2.readObject();
+			showingTimeList[i] = st;
+			System.out.println(i + ". " + st.toString());
+		}
+		int choice = input.nextInt();
+		oos2.writeInt(showingTimeNumber - 1);
+		for (int i = 0; i < showingTimeNumber; i++) {
+			if(i != choice)
+				oos2.writeObject(showingTimeList[i]);
+		}
+		System.out.println("The showing time is removed successfully!");
 	}
 }
