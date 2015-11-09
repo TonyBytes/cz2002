@@ -9,7 +9,14 @@ import java.util.Scanner;
 
 public class AdminController {
 	private static Scanner input = new Scanner(System.in);
-
+	private	static FileOutputStream fosMov = new FileOutputStream("database/Movie");
+    private static ObjectOutputStream oosMov = new ObjectOutputStream(fosMov);
+    private	static FileOutputStream fosShow = new FileOutputStream("database/ShowingTime");
+    private static ObjectOutputStream oosShow = new ObjectOutputStream(fosShow);
+        private static FileInputStream fisMov = new FileInputStream("database/Movie");
+    private static ObjectInputStream oisMov = new ObjectInputStream(fis);
+    private static FileInputStream fisShow = new FileInputStream("database/ShowingTime");
+    private static ObjectInputStream oisShow = new ObjectInputStream(fis);
 	public static boolean checkLogin() {
 		System.out.println("input admin password:");
 		if (input.nextLine().equals("admin")) {
@@ -207,5 +214,40 @@ public class AdminController {
 		}
 
 		oos2.close();
+	}
+
+	private void createShowingTime(){
+		System.out.print("Enter the cinema code: ");
+		String cinimaCode = input.next();
+		System.out.print("Choose a movie: ");
+		int movieNumber = oisMov.readInt;
+		Movie movie;
+		Movie[] movielist = new Movie[movieNumber];
+		for(int i = 0; i < movieNumber; i++){
+			movie = (Movie)oisMov.readObject();
+			movielist[i] = movie;
+			System.out.println(i + ". " + movie.toString());
+		}
+		int choice = input.nextInt();
+		movie = movielist[choice];
+		System.out.print("Enter the date(dd/mm/yyyy): ");
+		String date = input.next();
+		System.out.print("Enter the time(hh/mm): ");
+		String time = input.next();
+		System.out.println("Choose the class type: ");
+		System.out.println("1. Platinum($100 per ticket) ");
+		System.out.println("2. Gold($50 per ticket)");
+		String classType = input.nextInt();
+		ShowingTime st = new ShowingTime(cinemaCode, movie, date, time, classType);
+		oosShow.writeInt((int)oisShow.readInt()+1);
+		oosShow.writeObject(st);
+		System.out.println("New movie is added successfully!");
+	}
+
+	private void updateShowingTime(){
+
+	}
+	private void removeShowingTime(){
+
 	}
 }
