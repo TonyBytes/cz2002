@@ -4,7 +4,7 @@ public class Review {
 	public String name;
 	public String mName;
 	public String content;
-	public double rating;
+	private double rating;
 	
 	public Review(String aName,String moName,String aContent,double aRating){
 		name = aName;
@@ -12,5 +12,6 @@ public class Review {
 		content = aContent;
 		rating = aRating;
 	}
+	public double getRating(){return rating;}
 	
 }
