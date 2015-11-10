@@ -1,6 +1,8 @@
 package cz2002;
 
-public class History {
+import java.io.Serializable;
+
+public class History implements Serializable{
 	private String custName;
 	private String movieName;
 	private String trID;

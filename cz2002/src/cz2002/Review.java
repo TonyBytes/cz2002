@@ -1,6 +1,6 @@
 package cz2002;
-
-public class Review {
+import java.io.*;
+public class Review implements Serializable{
 	private String name;
 	private String mName;
 	private String content;
@@ -13,5 +13,5 @@ public class Review {
 		rating = aRating;
 	}
 	public float getRating(){return rating;}
-	public float getContent(){return content;}
+	public String getContent(){return content;}
 }

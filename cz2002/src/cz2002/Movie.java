@@ -30,7 +30,7 @@ public class Movie implements Serializable {
 		reviewList = new Vector<Review>();
 		timeList = new Vector<ShowingTime>();
 		reviewNum = 0;
-		rating = 5;
+		rating = 0;
 
 	}
 
@@ -66,6 +66,7 @@ public class Movie implements Serializable {
 		return title + " " + showingStatus + " " + director + " " + synopsis + " " + castInfo + " ";
 		// depends on the format requirement , needed to discuss
 	}
+	public String getTitle(){return title;}
 
 	public void showTime() {
 		// needed to retrieve from database

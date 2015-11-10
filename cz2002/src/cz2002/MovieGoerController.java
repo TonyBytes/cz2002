@@ -44,8 +44,7 @@ public class MovieGoerController {
 		int num;
 		System.out.println("Please input your name");
 		String name1 = input.next();
-		System.out.println("Please input the movie's name");
-		String mName = input.next();
+		
 		FileInputStream fis = new FileInputStream("database/Movie");
 	    ObjectInputStream ois = new ObjectInputStream(fis);
 	    num = ois.readInt();
@@ -59,14 +58,21 @@ public class MovieGoerController {
 	    Movie aMovie = movieList.get(sel-1);
 	    System.out.println("Please key in your rating");
 	    float rate = input.nextFloat();
+	    while(rate>10 || rate<0){
+	    	System.out.println("Please key in your rating(0-10)");
+		    rate = input.nextFloat();
+	    }
 	    System.out.print("Please make your review");
 	    String content = input.next();
+	    String mName = aMovie.getTitle();
 	    Review review = new Review(name1,mName,content,rate);    
 	    aMovie.addReview(review); // write a Review object to file
 	    FileOutputStream fos = new FileOutputStream("database/Movie");
 		ObjectOutputStream oos= new ObjectOutputStream(fos);
 	    oos.writeInt(num);
-	    oos.writeObject(movieList);
+	    for(int i=0; i<num;i++){
+	    	oos.writeObject(movieList.get(i));
+	    }
 	    ois.close();
 	    oos.close();
 	      
@@ -97,7 +103,10 @@ public class MovieGoerController {
 		float[] rateList = new float[5];
 		int[] salesList = new int[5];
 		Movie topList[]=new Movie[5];
-		for (int i=0;i<5;i++) {rateList[i]=0; salesList[i]=0;}
+		for (int i=0;i<5;i++) {
+			rateList[i]=0; salesList[i]=0;
+			topList[i]=null;
+			}
 		System.out.println("1. Top 5 ranking by ticket sales");
 		System.out.println("2. Top 5 ranking by reviewers' rating");
 		choice = input.nextInt();
