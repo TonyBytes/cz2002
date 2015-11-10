@@ -1,9 +1,9 @@
 package cz2002;
 
 public class Review {
-	public String name;
-	public String mName;
-	public String content;
+	private String name;
+	private String mName;
+	private String content;
 	private float rating;
 	
 	public Review(String aName,String moName,String aContent,float aRating){
@@ -13,5 +13,5 @@ public class Review {
 		rating = aRating;
 	}
 	public float getRating(){return rating;}
-	
+	public float getContent(){return content;}
 }

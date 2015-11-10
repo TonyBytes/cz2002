@@ -18,6 +18,7 @@ public class Movie implements Serializable {
 	private Vector timeList; // connecting showingTime
 	private int reviewNum; // record the review number to calculate the average
 							// review
+	private int sales;
 
 	public Movie(String t, String s, String d) {
 
@@ -73,5 +74,6 @@ public class Movie implements Serializable {
 	public void showReview() {
 		// needed to retrieve from database
 	}
-
+	public float getRating(){return rating;}
+	public int getSales(){return sales;}
 }

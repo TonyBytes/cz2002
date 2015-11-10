@@ -46,24 +46,28 @@ public class MovieGoerController {
 		String name1 = input.next();
 		System.out.println("Please input the movie's name");
 		String mName = input.next();
-		FileInputStream fis = new FileInputStream("database/Review");
+		FileInputStream fis = new FileInputStream("database/Movie");
 	    ObjectInputStream ois = new ObjectInputStream(fis);
 	    num = ois.readInt();
-	    ArrayList<Review> reviewList = new ArrayList<Review>();
+	    ArrayList<Movie> movieList = new ArrayList<Movie>();
+	    System.out.println("select from below");
 	    for (int i = 0; i<num;i++){
-	    	reviewList.add((Review)ois.readObject());
+	    	movieList.add((Movie)ois.readObject());
+	    	System.out.println("Movie " + (i + 1) + ": " + movieList.get(i).toString());
 	    }
-	    FileOutputStream fos = new FileOutputStream("database/Review");
-	    ObjectOutputStream oos = new ObjectOutputStream(fos);
+	    int sel = input.nextInt();
+	    Movie aMovie = movieList.get(sel-1);
 	    System.out.println("Please key in your rating");
 	    float rate = input.nextFloat();
 	    System.out.print("Please make your review");
 	    String content = input.next();
 	    Review review = new Review(name1,mName,content,rate);    
-	    reviewList.add(review); // write a Review object to file
-	    num++;
+	    aMovie.addReview(review); // write a Review object to file
+	    FileOutputStream fos = new FileOutputStream("database/Movie");
+		ObjectOutputStream oos= new ObjectOutputStream(fos);
 	    oos.writeInt(num);
-	    oos.writeObject(reviewList);
+	    oos.writeObject(movieList);
+	    ois.close();
 	    oos.close();
 	      
 	}
@@ -82,22 +86,104 @@ public class MovieGoerController {
 			if(h.getCustName()==name2)
 				System.out.println(name2+"booked: "+h.getMovieName()+"TID: "+h.getTID());
 		}
+		ois2.close();
 	}
 	public static void seeTop5() throws Exception{
 		int choice;
-		double[] rateList = null;
+		FileInputStream fis = new FileInputStream("database/Movie");
+	    ObjectInputStream ois = new ObjectInputStream(fis);
+	    int num = ois.readInt();
+	    ArrayList<Movie> movieList = new ArrayList<Movie>();
+		float[] rateList = new float[5];
+		int[] salesList = new int[5];
+		Movie topList[]=new Movie[5];
+		for (int i=0;i<5;i++) {rateList[i]=0; salesList[i]=0;}
 		System.out.println("1. Top 5 ranking by ticket sales");
 		System.out.println("2. Top 5 ranking by reviewers' rating");
 		choice = input.nextInt();
-		if (choice == 1) ;
+		if (choice == 1) {
+			for(int i = 0; i<num;i++){
+				movieList.add((Movie)ois.readObject());
+				int temp = movieList.get(i).getSales();
+				if(temp>salesList[0]){
+		    		for(int n = 4;n>0;n--) {
+		    			salesList[n]=salesList[n-1];
+		    			topList[n]=topList[n-1];
+		    		}
+		    		salesList[0]=temp;
+		    		topList[0]=movieList.get(i);
+		    	}
+		    	else if(temp>salesList[1]){
+		    		for(int n = 4;n>1;n--) {
+		    			salesList[n]=salesList[n-1];
+		    			topList[n]=topList[n-1];
+		    		}
+		    		salesList[1]=temp;
+		    		topList[1]=movieList.get(i);
+		    	}
+		    	else if(temp>salesList[2]){
+		    		for(int n = 4;n>2;n--) {
+		    			salesList[n]=salesList[n-1];
+		    			topList[n]=topList[n-1];
+		    		}
+		    		salesList[2]=temp;
+		    		topList[2]=movieList.get(i);
+		    	}
+		    	else if(temp>salesList[3]){
+		    		salesList[4]=salesList[3];
+		    		topList[4]=topList[3];
+		    		salesList[3]=temp;
+		    		topList[3]=movieList.get(i);
+		    	}
+		    	else if(temp>salesList[4]){
+		    		salesList[4]=temp;
+		    		topList[4]=movieList.get(i);
+		    	}
+			}
+		for(int i = 0; i>5;i++)
+		    	System.out.println((i+1)+". "+topList[i].toString());
+		}
 		else if (choice == 2){
-			FileInputStream fis = new FileInputStream("database/Movie");
-		    ObjectInputStream ois = new ObjectInputStream(fis);
-		    int num = ois.readInt();
-		    ArrayList<Movie> movieList = new ArrayList<Movie>();
 		    for (int i = 0; i<num;i++){
 		    	movieList.add((Movie)ois.readObject());
+		    	float temp = movieList.get(i).getRating();
+		    	if(temp>rateList[0]){
+		    		for(int n = 4;n>0;n--) {
+		    			rateList[n]=rateList[n-1];
+		    			topList[n]=topList[n-1];
+		    		}
+		    		rateList[0]=temp;
+		    		topList[0]=movieList.get(i);
+		    	}
+		    	else if(temp>rateList[1]){
+		    		for(int n = 4;n>1;n--) {
+		    			rateList[n]=rateList[n-1];
+		    			topList[n]=topList[n-1];
+		    		}
+		    		rateList[1]=temp;
+		    		topList[1]=movieList.get(i);
+		    	}
+		    	else if(temp>rateList[2]){
+		    		for(int n = 4;n>2;n--) {
+		    			rateList[n]=rateList[n-1];
+		    			topList[n]=topList[n-1];
+		    		}
+		    		rateList[2]=temp;
+		    		topList[2]=movieList.get(i);
+		    	}
+		    	else if(temp>rateList[3]){
+		    		rateList[4]=rateList[3];
+		    		topList[4]=topList[3];
+		    		rateList[3]=temp;
+		    		topList[3]=movieList.get(i);
+		    	}
+		    	else if(temp>rateList[4]){
+		    		rateList[4]=temp;
+		    		topList[4]=movieList.get(i);
+		    	}
 		    }
+		    for(int i = 0; i>5;i++)
+		    	System.out.println((i+1)+". "+topList[i].toString());
 		        
 			
 		}
